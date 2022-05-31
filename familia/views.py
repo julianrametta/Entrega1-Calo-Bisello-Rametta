@@ -1,11 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
 from django.template import loader
 from django.shortcuts import render
-from familia.forms import PersonaForm, BuscarPersonasForm
+from familia.forms import PersonaForm, BuscarPersonasForm, MascotaForm, BuscarMascotaForm
 
-from familia.models import Persona
+from familia.models import Persona, Mascota
 
-def index(request):
+def index_familiar(request: HttpRequest) -> HttpResponse:
     personas = Persona.objects.all()
     template = loader.get_template('familia/lista_familiares.html')
     context = {
@@ -14,7 +14,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def agregar(request):
+def agregar_familiar(request: HttpRequest) -> HttpResponse:
     '''
     TODO: agregar un mensaje en el template index.html que avise al usuario que 
     la persona fue cargada con éxito
@@ -31,38 +31,29 @@ def agregar(request):
             altura = form.cleaned_data['altura']
             Persona(nombre=nombre, apellido=apellido, email=email, fecha_nacimiento=fecha_nacimiento, altura=altura).save()
 
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/familiar")
     elif request.method == "GET":
         form = PersonaForm()
     else:
-        return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
+        return HttpResponseBadRequest("Error no conozco ese metodo para esta request")
 
     
     return render(request, 'familia/form_carga.html', {'form': form})
 
 
-def borrar(request, identificador):
+def borrar_familiar(request: HttpRequest, identificador: str) -> HttpResponse:
     '''
-    TODO: agregar un mensaje en el template index.html que avise al usuario que 
-    la persona fue eliminada con éxito        
+    Vista que permite para un metodo http GET borrar un familiar de la base de datos.       
     '''
     if request.method == "GET":
         persona = Persona.objects.filter(id=int(identificador)).first()
         if persona:
             persona.delete()
-        return HttpResponseRedirect("/familia/")
+        return HttpResponseRedirect("/familiar")
     else:
         return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
 
-
-def actualizar(request, identificador):
-    '''
-    TODO: implementar una vista para actualización
-    '''
-    pass
-
-
-def buscar(request):
+def buscar_familiar(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         form_busqueda = BuscarPersonasForm()
         return render(request, 'familia/form_busqueda.html', {"form_busqueda": form_busqueda})
@@ -74,4 +65,60 @@ def buscar(request):
             personas = Persona.objects.filter(nombre__icontains=palabra_a_buscar)
 
         return  render(request, 'familia/lista_familiares.html', {"personas": personas})
+
+def index_mascota(request: HttpRequest) -> HttpResponse:
+    mascotas = Mascota.objects.all()
+    template = loader.get_template('mascota/lista_mascotas.html')
+    context = {
+        'mascotas': mascotas,
+    }
+    return HttpResponse(template.render(context, request))
+
+def agregar_mascota(request: HttpRequest) -> HttpResponse:
+    '''
+    Vista que para un metodo http GET retorna el formulario hmtl para ingresar una nueva mascota y para un
+    metodo http POST carga una nueva mascota en la base de datos y retorna el html con la lista de mascotas.
+    '''
+
+    if request.method == "POST":
+        form = MascotaForm(request.POST)
+        if form.is_valid():
+
+            tipo = form.cleaned_data['nombre']
+            raza = form.cleaned_data['raza']
+            nombre = form.cleaned_data['nombre']
+            fecha_nacimiento = form.cleaned_data['fecha_nacimiento']
+            Mascota(tipo=tipo, raza=raza, nombre=nombre, fecha_nacimiento=fecha_nacimiento).save()
+
+            return HttpResponseRedirect("/mascota")
+    elif request.method == "GET":
+        form = MascotaForm()
+    else:
+        return HttpResponseBadRequest("Error no conozco ese metodo para esta request")
     
+    return render(request, 'mascota/form_carga.html', {'form': form})
+
+def borrar_mascota(request: HttpRequest, identificador: str) -> HttpResponse:
+    '''
+    Vista que permite para un metodo http GET borrar una mascota de la base de datos   
+    '''
+    if request.method == "GET":
+        mascota = Mascota.objects.filter(id=int(identificador)).first()
+        if mascota:
+            mascota.delete()
+        return HttpResponseRedirect("/mascota")
+    else:
+        return HttpResponseBadRequest("Error no conzco ese metodo para esta request")
+
+def buscar_mascota(request: HttpRequest) -> HttpResponse:
+    if request.method == "GET":
+        form_busqueda = BuscarMascotaForm()
+        return render(request, 'mascota/form_busqueda.html', {"form_busqueda": form_busqueda})
+
+    elif request.method == "POST":
+        form_busqueda = BuscarMascotaForm(request.POST)
+        if form_busqueda.is_valid():
+            palabra_a_buscar = form_busqueda.cleaned_data['palabra_a_buscar']
+            mascotas = Mascota.objects.filter(nombre__icontains=palabra_a_buscar)
+
+        return  render(request, 'mascota/lista_mascotas.html', {"mascotas": mascotas})

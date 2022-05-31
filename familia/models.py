@@ -7,3 +7,9 @@ class Persona(models.Model):
     email = models.CharField(max_length=100)
     fecha_nacimiento = models.DateField()
     altura = models.FloatField(default=0.0)
+
+class Mascota(models.Model):
+    tipo = models.CharField(max_length=100)
+    raza = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    fecha_nacimiento = models.DateField()
