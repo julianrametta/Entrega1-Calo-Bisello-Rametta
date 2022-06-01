@@ -1,12 +1,16 @@
-# Mi Primer MVT Django
+# Proyecto Final Coderhouse Python
+**Integrantes: Calo, Bisello, Rametta**  
 
-Ejemplo de MVT para la clase de Coder House python, este codigo contiene:
- - Vistas 
- - Formularios
- - Modelos
- - Templates
 
-**importnante: Este ejemplo fue probado con python 3.8.13 y Django 4.0.4**
+**Objetivo General: Desarrollo de una WEB Django con Patron MVT**  
+El proyecto debe incluir
+ - Herencia de HTML
+ - 3 clases en models
+ - Un formulario para insertar datos a todas las clases de los models
+ - Un formulario para buscar algo en la base de datos
+ - Readme que indique el orden en el que se prueban las cosas y donde estan las funcionalidades
+
+**importante: Este ejemplo fue probado con python 3.8.13 y Django 4.0.4**
 
 ## Checkear que tengas Python
 
@@ -61,12 +65,12 @@ $ pip install django-bootstrap-v5
 windows:
 
 ```PS
-C:\> git clone https://github.com/martinezger/mi-primer-mvt.git
+C:\> git clone https://github.com/julianrametta/Entrega1-Calo-Bisello-Rametta.git
 ```
 
 Linux/Mac:
 ```bash
-$ git clone https://github.com/martinezger/mi-primer-mvt.git
+$ git clone https://github.com/julianrametta/Entrega1-Calo-Bisello-Rametta.git
 ```
 
 ## Correr el Servidor
