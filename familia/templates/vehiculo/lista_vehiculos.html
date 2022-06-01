@@ -1,0 +1,50 @@
+{% extends "familia/index.html" %}
+
+{% load bootstrap5 %}
+
+{% block cuerpo %}
+<div class="container">    
+  
+  <div class="row">
+    <div class="col">
+      {% url 'agregarVehiculo' as agregarVehiculo_url %}
+      {% url 'buscarVehiculo' as buscarVehiculo_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregarVehiculo_url %}
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscarVehiculo_url %} 
+    <div>
+  <div>
+
+  <div class="row">
+    <div class="col">
+        {% if vehiculos %}
+        <table class="table">
+            <thead>
+                <th scope="col">Identificador</th>
+                <th scope="col">marca</th>
+                <th scope="col">modelo</th>
+                <th scope="col">patente</th>
+                <th scope="col">año</th>
+                
+            </thead>
+        
+            {% for p in vehiculos %}
+            <tbody>
+                <tr>
+                    <th scope="row">{{p.id}} </th>
+                    <td> {{p.marca}} </td>
+                    <td> {{p.modelo}} </td>
+                    <td> {{p.patente}} </td>
+                    <td> {{p.año}} </td>
+                    {% url 'borrarVehiculo' identificador=p.id as borrar_url %}
+                    <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
+                </tr>  
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tienes vehiculos cargados</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

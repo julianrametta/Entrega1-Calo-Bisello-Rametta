@@ -8,6 +8,12 @@ class Persona(models.Model):
     fecha_nacimiento = models.DateField()
     altura = models.FloatField(default=0.0)
 
+class Vehiculo(models.Model):
+    marca = models.CharField(max_length=100)
+    modelo = models.CharField(max_length=100)
+    patente = models.CharField(max_length=10)
+    año = models.DateField()
+    
 class Mascota(models.Model):
     tipo = models.CharField(max_length=100)
     raza = models.CharField(max_length=100)
