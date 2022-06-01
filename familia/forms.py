@@ -22,3 +22,13 @@ class VehiculoForm(forms.Form):
 
 class BuscarVehiculoForm(forms.Form):
     palabra_a_buscar = forms.CharField(label="Buscar")
+    
+class MascotaForm(forms.Form):
+    tipo = forms.CharField(label="Tipo", max_length=100)
+    raza = forms.CharField(label="Raza", max_length=100)
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    fecha_nacimiento =     fecha_nacimiento = forms.DateField(label="Fecha Nacimiento", input_formats=["%d/%m/%Y"],
+    widget=forms.TextInput(attrs={'placeholder': '30/12/1995'}))
+
+class BuscarMascotaForm(forms.Form):
+    palabra_a_buscar = forms.CharField(label="Buscar")
