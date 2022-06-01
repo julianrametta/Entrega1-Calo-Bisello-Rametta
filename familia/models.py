@@ -13,9 +13,3 @@ class Vehiculo(models.Model):
     modelo = models.CharField(max_length=100)
     patente = models.CharField(max_length=10)
     año = models.DateField()
-
-class Mascota(models.Model):
-    tipo = models.CharField(max_length=100)
-    raza = models.CharField(max_length=100)
-    nombre = models.CharField(max_length=100)
-    fecha_nacimiento = models.DateField()

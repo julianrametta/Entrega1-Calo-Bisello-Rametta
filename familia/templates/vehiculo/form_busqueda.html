@@ -6,12 +6,12 @@
 <div class="container">
    <div class="row">
      <div class="col">
-      <h1>BUSCAR UNA MASCOTA</h1>
+      <h1>BUSCAR UN VEHICULO</h1>
      </div>
      </div>
      <div class="row">
      <div class="col">
-      <form action="{% url  'buscar_mascota'%}" method="post">
+      <form action="{% url  'buscarVehiculo'%}" method="post">
          {% csrf_token %} 
          {% bootstrap_form form_busqueda %}
          {% bootstrap_button "Buscar" button_type="submit" button_class="btn-primary" %}

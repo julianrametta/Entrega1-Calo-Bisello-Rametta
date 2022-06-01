@@ -8,7 +8,9 @@
   <div class="row">
     <div class="col">
       {% url 'agregarVehiculo' as agregarVehiculo_url %}
-      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregarVehiculo_url %} 
+      {% url 'buscarVehiculo' as buscarVehiculo_url %}
+      {% bootstrap_button "Agregar" button_class="btn-success" button_type="link" href=agregarVehiculo_url %}
+      {% bootstrap_button "Buscar" button_class="btn-success" button_type="link" href=buscarVehiculo_url %} 
     <div>
   <div>
 
@@ -33,7 +35,7 @@
                     <td> {{p.modelo}} </td>
                     <td> {{p.patente}} </td>
                     <td> {{p.año}} </td>
-                    {% url 'borrar' identificador=p.id as borrar_url %}
+                    {% url 'borrarVehiculo' identificador=p.id as borrar_url %}
                     <td>{% bootstrap_button "Borrar" size="sm" button_class="btn-danger" button_type="link" href=borrar_url %}</td>
                 </tr>  
             </tbody>
